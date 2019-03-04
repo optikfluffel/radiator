@@ -1,0 +1,33 @@
+version: '3.5'
+
+networks:
+  webnet:
+    driver: overlay
+    attachable: true # Needed in order to run custom commands in the container
+
+services:
+  web:
+    depends_on:
+      - db
+    image: "podlove/radiator:latest"
+    restart: always
+    # deploy:
+    #   replicas: 1
+    #   restart_policy:
+    #     condition: on-failure    
+    ports:
+      - "4444:4000"
+    env_file:
+      - config/docker.env
+    networks:
+      - webnet
+  db:
+    image: postgres
+    volumes:
+      - "./volumes/postgres:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
+    env_file:
+      - config/docker.env
+    networks:
+      - webnet

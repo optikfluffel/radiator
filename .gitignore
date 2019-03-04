@@ -46,3 +46,9 @@ npm-debug.log
 
 # local Elixir Language Server cache
 .elixir_ls
+
+# Docker postgres
+/volumes
+
+# Mac Finder Cache
+.DS_Store
